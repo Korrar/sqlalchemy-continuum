@@ -11,11 +11,8 @@ class AssociationTableRelationshipsTestCase(TestCase):
 
         class PublishedArticle(self.Model):
             __tablename__ = 'published_article'
-            __table_args__ = (
-                PrimaryKeyConstraint("article_id", "author_id"),
-                {'keep_existing': True}
-            )
 
+            id = sa.Column(sa.Integer, primary_key=True)
             article_id = sa.Column(sa.Integer, sa.ForeignKey('article.id'))
             author_id = sa.Column(sa.Integer, sa.ForeignKey('author.id'))
             relationship_kwargs = {}
@@ -54,12 +51,9 @@ class AssociationTableRelationshipsTestCase(TestCase):
         au = self.Author(name=u'Some author')
         self.session.add(au)
         self.session.commit()
-
-        pa = self.PublishedArticle(article_id=article.id, author_id=au.id)
-        self.session.add(pa)
+        au.articles.append(article)
 
         self.session.commit()
-
 
 
 create_test_cases(AssociationTableRelationshipsTestCase)
