@@ -295,7 +295,7 @@ class UnitOfWork(object):
             return
 
         if self.pending_statements:
-            self.create_association_versions(session)
+            self.create_version_objects(session)
 
         if self.operations:
             self.manager.plugins.before_create_version_objects(self, session)
