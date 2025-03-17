@@ -322,7 +322,7 @@ class VersioningManager(object):
             except KeyError:
                 for connection in self.units_of_work.keys():
                     if not connection.closed and connection.connection is conn.connection:
-                        uow = self.unit_of_work(session)
+                        uow = self.unit_of_work(conn)
                         break  # The ConnectionFairy is the same, this connection is a clone
                 else:
                     raise
