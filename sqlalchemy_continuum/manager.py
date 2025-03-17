@@ -322,11 +322,12 @@ class VersioningManager(object):
             except KeyError:
                 for connection in self.units_of_work.keys():
                     if not connection.closed and connection.connection is conn.connection:
-                        uow = self.unit_of_work(conn)
+                        uow = self.units_of_work[connection]  # Use the existing UOW for the matching connection
                         break  # The ConnectionFairy is the same, this connection is a clone
                 else:
-                    raise
-
+                    # If no matching connection is found, create a new UnitOfWork
+                    uow = UnitOfWork(self)
+                    self.units_of_work[conn] = uow  # Register it with the connection
         return uow
 
     def before_flush(self, session, flush_context, instances):
