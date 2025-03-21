@@ -64,11 +64,11 @@ def make_versioned(
     manager.track_operations(mapper)
     manager.track_session(session)
 
-    sa.event.listen(
-        sa.engine.Engine,
-        'before_execute',
-        manager.track_association_operations
-    )
+    # sa.event.listen(
+    #     sa.engine.Engine,
+    #     'before_execute',
+    #     manager.track_association_operations
+    # )
 
     sa.event.listen(
         sa.engine.Engine,
@@ -103,11 +103,11 @@ def remove_versioning(
     manager.remove_class_configuration_listeners(mapper)
     manager.remove_operations_tracking(mapper)
     manager.remove_session_tracking(session)
-    sa.event.remove(
-        sa.engine.Engine,
-        'before_execute',
-        manager.track_association_operations
-    )
+    # sa.event.remove(
+    #     sa.engine.Engine,
+    #     'before_execute',
+    #     manager.track_association_operations
+    # )
 
     sa.event.remove(
         sa.engine.Engine,
